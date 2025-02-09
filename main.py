@@ -9,10 +9,12 @@ from dotenv import load_dotenv
 # Load environment variables from .env file
 load_dotenv()
 
-logging.basicConfig(level=logging.INFO)  # Configure logging
+logging.basicConfig(level=logging.INFO)  
 logger = logging.getLogger(__name__)
 
 app = FastAPI()
+
+model = genai.GenerativeModel("gemini-pro")
 
 # Serve static files
 app.mount("/static", StaticFiles(directory="static"), name="static")
@@ -23,38 +25,16 @@ if not google_ai_studio_api_key:
     logger.error("Google AI Studio API key not found in environment variables.")
     raise ValueError("Google AI Studio API key is required.")
 
-# Configure Google AI Studio API
+# Google AI Studio API key
 genai.configure(api_key=google_ai_studio_api_key)
 
-# Initialize the model
-model = genai.GenerativeModel("gemini-pro")
 
 @app.get("/", response_class=HTMLResponse)
 async def home():
-    return """<!DOCTYPE html>
-    <html>
-    <head>
-        <title>Cute Japanese Tutor</title>
-        <link rel="stylesheet" href="/static/style.css?v=1">
-    </head>
-    <body>
-        <div class="chat-container">
-            <h1>こんにちは！にほんごをべんきょうしましょう！</h1>
-            <div class="chat-box">
-                <div id="chat-log">
-                    <div class="message bot-message">こんにちは！(Hello!)</div>
-                </div>
-                <div class="input-area">
-                    <form onsubmit="sendMessage(); return false;">
-                    <input type="text" id="user-input" placeholder="Type your message here...">
-                    <button type="submit">Send</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-        <script src="/static/script.js"></script>
-    </body>
-    </html>"""
+    # UTF-8 encoding
+    with open("templates/index.html", "r", encoding="utf-8") as file:
+        html_content = file.read()
+    return HTMLResponse(content=html_content)
 
 @app.post("/chat")
 async def chat(request: Request):
@@ -63,7 +43,7 @@ async def chat(request: Request):
     logger.info(f"Received user message: {user_message}")  # Log the user message
 
     try:
-        # Generate a response using Google AI Studio
+        # Generate Google AI Studio response
         response = model.generate_content(
             f"You are a cute Japanese tutor. Teach Japanese in a fun and simple way. User says: {user_message}"
         )
