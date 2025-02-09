@@ -1,0 +1,93 @@
+body {
+    font-family: 'Comic Sans MS', cursive, sans-serif;
+    background-color: #fff0f5;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.chat-container {
+    width: 400px;
+    background-color: #ffffff;
+    border-radius: 15px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+h1 {
+    background-color: #ff69b4;
+    color: white;
+    margin: 0;
+    padding: 15px;
+    text-align: center;
+    font-size: 1.5em;
+}
+
+.chat-box {
+    padding: 15px;
+}
+
+#chat-log {
+    height: 300px;
+    overflow-y: auto;
+    border-bottom: 1px solid #ddd;
+    margin-bottom: 10px;
+}
+
+.message {
+    margin: 10px 0;
+    padding: 10px;
+    border-radius: 10px;
+    max-width: 70%;
+    word-wrap: break-word;
+}
+
+.bot-message {
+    background-color: #ffb6c1;
+    align-self: flex-start;
+}
+
+.user-message {
+    background-color: #ff69b4;
+    color: white;
+    align-self: flex-end;
+    margin-left: auto;
+}
+
+.input-area {
+    display: flex;
+    gap: 10px;
+    align-items: center; /* Align input and button vertically */
+    justify-content: space-between; /* Push button to the right */
+    width: 100%; /* Ensure it takes full width */
+}
+
+input {
+    flex: 1; /* Input field takes up remaining space */
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    font-family: 'Comic Sans MS', cursive, sans-serif;
+    font-size: 16px;
+    outline: none; /* Remove default focus outline */
+}
+
+button {
+    padding: 10px 20px;
+    background-color: #ff69b4;
+    color: white;
+    border-radius: 10px;
+    cursor:pointer;
+    font-family: 'Comic Sans MS', cursive, sans-serif;
+    font-size: 16px;
+    transition: background-color 0.3s ease; /* Smooth hover effect */
+    white-space: nowrap; /* Prevent button text from wrapping */
+    margin-left: 30px;
+}
+
+button:hover {
+    background-color: #ff1493;
+}

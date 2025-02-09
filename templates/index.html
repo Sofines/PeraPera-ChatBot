@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cute Japanese Tutor</title>
+    <link rel="stylesheet" href="/static/style.css?v=1"> <!-- Cache-busting -->
+</head>
+<body>
+    <div class="chat-container">
+        <h1>こんにちは！にほんごをべんきょうしましょう！</h1>
+        <div class="chat-box">
+            <div id="chat-log">
+                <div class="message bot-message">こんにちは！(Hello!)</div>
+            </div>
+            <div class="input-area">
+                <form onsubmit="sendMessage(); return false;">
+                    <input type="text" id="user-input" placeholder="Type your message here...">
+                    <button type="submit">Send</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script src="/static/script.js"></script>
+</body>
+</html>
