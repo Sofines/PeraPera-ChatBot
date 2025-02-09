@@ -1,25 +1,39 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8">
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Learn Japanese with a cute AI tutor" />
     <title>Cute Japanese Tutor</title>
-    <link rel="stylesheet" href="/static/style.css?v=1">
-</head>
-<body>
+    <link rel="stylesheet" href="/static/style.css" />
+  </head>
+  <body>
     <div class="chat-container">
-        <h1>こんにちは！にほんごをべんきょうしましょう！</h1>
-        <div class="chat-box">
-            <div id="chat-log">
-                <div class="message bot-message">こんにちは！(Hello!)</div>
-            </div>
-            <div class="input-area">
-                <form onsubmit="sendMessage(); return false;">
-                    <input type="text" id="user-input" placeholder="Type your message here...">
-                    <button type="submit">Send</button>
-                </form>
-            </div>
+      <h1>こんにちは！にほんごをべんきょうしましょう！</h1>
+      <div class="box">
+        <div id="chat-log">
+          <div class="message bot-message">
+            こんにちは！(Hello!) <br />
+            Japanese learning made fun and easy! 😊
+          </div>
         </div>
+        <div class="input-area">
+          <form id="chat-form" onsubmit="sendMessage(); return false;">
+            <div class="input-group">
+              <input
+                type="text"
+                id="user-input"
+                placeholder="Type your message here..."
+                autocomplete="off"
+                aria-label="Message input"
+                required
+              />
+              <button type="submit" aria-label="Send message">Send</button>
+            </div>
+          </form>
+        </div>
+      </div>
     </div>
     <script src="/static/script.js"></script>
-</body>
+  </body>
 </html>
