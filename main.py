@@ -1,4 +1,5 @@
-from fastapi import FastAPI, Request
+from fastapi import FastAPI, Request, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import HTMLResponse, JSONResponse
 from fastapi.staticfiles import StaticFiles
 import google.generativeai as genai
@@ -12,51 +13,77 @@ load_dotenv()
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-app = FastAPI()
+app = FastAPI(
+    title="PeraPera ChatBot",
+    description="A cute Japanese language tutor chatbot",
+    version="0.0.1",
+)
 
-model = genai.GenerativeModel("gemini-pro")
+# Add CORS middleware
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 # Serve static files
 app.mount("/static", StaticFiles(directory="static"), name="static")
 
-# Load Google AI Studio API key from .env
-google_ai_studio_api_key = os.environ.get("GOOGLE_AI_STUDIO_API_KEY")
-if not google_ai_studio_api_key:
-    logger.error("Google AI Studio API key not found in environment variables.")
-    raise ValueError("Google AI Studio API key is required.")
-
-# Google AI Studio API key
-genai.configure(api_key=google_ai_studio_api_key)
+# Initialize Gemini model
+try:
+    google_ai_studio_api_key = os.environ.get("GOOGLE_AI_STUDIO_API_KEY")
+    if not google_ai_studio_api_key:
+        raise HTTPException(
+            status_code=500,
+            detail="Google AI Studio API key not found in environment variables",
+        )
+    genai.configure(api_key=google_ai_studio_api_key)
+    model = genai.GenerativeModel("gemini-pro")
+except Exception as e:
+    logger.error(f"Failed to initialize Gemini model: {e}")
+    raise
 
 
 @app.get("/", response_class=HTMLResponse)
 async def home():
-    # UTF-8 encoding
-    with open("templates/index.html", "r", encoding="utf-8") as file:
-        html_content = file.read()
-    return HTMLResponse(content=html_content)
+    try:
+        with open("templates/index.html", "r", encoding="utf-8") as file:
+            return HTMLResponse(content=file.read())
+    except FileNotFoundError:
+        raise HTTPException(status_code=404, detail="Template not found")
 
 
 @app.post("/chat")
 async def chat(request: Request):
-    data = await request.json()
-    user_message = data.get("message", "").lower()
-    logger.info(f"Received user message: {user_message}")  # Log the user message
-
     try:
-        # Generate Google AI Studio response
+        data = await request.json()
+        user_message = data.get("message", "").strip().lower()
+
+        if not user_message:
+            raise HTTPException(status_code=400, detail="Message cannot be empty")
+
+        logger.info(f"Received user message: {user_message}")
+
         response = model.generate_content(
-            f"You are a cute Japanese tutor. Teach Japanese in a fun and simple way. User says: {user_message}"
+            f"""You are a cute Japanese  and a friend. your name is Natsumichan. Follow these rules:
+            - Teach Japanese in a fun and simple way while being patient and friendly
+            - Use emojis appropriately
+            User message: {user_message}"""
         )
-        logger.info(
-            f"Google AI Studio API response: {response}"
-        )  # Log the entire response
+
         bot_response = response.text
-        logger.info(f"Bot response: {bot_response}")  # Log the extracted bot message
+        logger.info(f"Nachan response: {bot_response}")
+
         return JSONResponse(content={"response": bot_response})
 
     except Exception as e:
-        logger.exception(f"Error communicating with Google AI Studio: {e}")
-        return JSONResponse(
-            status_code=500, content={"error": "Failed to generate a response"}
-        )
+        logger.exception(f"Error in chat endpoint: {e}")
+        raise HTTPException(status_code=500, detail="Failed to generate response")
+
+
+# Add health check endpoint
+@app.get("/health")
+async def health_check():
+    return {"status": "healthy"}
