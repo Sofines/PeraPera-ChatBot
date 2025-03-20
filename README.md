@@ -34,5 +34,5 @@ Welcome to **PeraPeraAI**! This is a cute and interactive chatbot designed to he
 
 1. **Clone the Repository**:
    ```bash
-   git clone https://github.com/your-username/PeraPeraAI.git
-   cd PeraPeraAI
+   git clone https://github.com/Sofines/PeraPera-ChatBot.git
+   cd PeraPera-ChatBot
