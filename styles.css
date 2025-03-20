@@ -1,0 +1,44 @@
+/* styles.css */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP&display=swap');
+
+.stApp {
+    background-color: #0e1117; /* Your specified dark background */
+    font-family: 'Noto Sans JP', sans-serif;
+    color: #ffffff; /* White text for readability */
+}
+
+.stChatMessage {
+    border-radius: 15px;
+    padding: 10px;
+    margin: 5px 0;
+    border: 2px solid #ffccda; /* Pastel pink border for cuteness */
+}
+
+[data-testid="chatMessageUser"] {
+    background-color: #b3e5fc; /* Pastel blue for user messages */
+    text-align: right;
+}
+
+[data-testid="chatMessageAssistant"] {
+    background-color: #ffccda; /* Pastel pink for PeraPera */
+    text-align: left;
+}
+
+.stTextInput > div > input {
+    border: 2px solid #ffccda; /* Pastel pink border */
+    border-radius: 10px;
+    background-color: #2a2f3b; /* Slightly lighter dark shade for input */
+    color: #ffffff; /* White text in input */
+}
+
+/* Style the title */
+h1 {
+    color: #ffccda; /* Pastel pink */
+    text-align: center;
+}
+
+/* Style the subheader */
+p {
+    color: #cccccc; /* Light gray for subheader */
+    text-align: center;
+}

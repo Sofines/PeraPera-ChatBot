@@ -7,7 +7,6 @@ import os
 import logging
 from dotenv import load_dotenv
 
-# Load environment variables from .env file
 load_dotenv()
 
 logging.basicConfig(level=logging.INFO)
@@ -40,7 +39,7 @@ try:
             detail="Google AI Studio API key not found in environment variables",
         )
     genai.configure(api_key=google_ai_studio_api_key)
-    model = genai.GenerativeModel("gemini-pro")
+    model = genai.GenerativeModel("gemini-1.5-flash")
 except Exception as e:
     logger.error(f"Failed to initialize Gemini model: {e}")
     raise
@@ -67,14 +66,14 @@ async def chat(request: Request):
         logger.info(f"Received user message: {user_message}")
 
         response = model.generate_content(
-            f"""You are a cute Japanese  and a friend. your name is Natsumichan. Follow these rules:
+            f"""You are a cute Japanese  and a friend. Follow these rules:
             - Teach Japanese in a fun and simple way while being patient and friendly
             - Use emojis appropriately
             User message: {user_message}"""
         )
 
         bot_response = response.text
-        logger.info(f"Nachan response: {bot_response}")
+        logger.info(f"response: {bot_response}")
 
         return JSONResponse(content={"response": bot_response})
 
