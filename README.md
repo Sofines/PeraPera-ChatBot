@@ -16,7 +16,7 @@ Welcome to **PeraPeraAI**! This is a cute and interactive chatbot designed to he
 ## 🛠️ Technologies Used
 
 - **Backend**: FastAPI (Python)
-- **Frontend**: HTML, CSS, JavaScript
+- **Frontend**: Streamlit (Python), HTML, CSS, JavaScript
 - **AI Integration**: Google AI Studio (Gemini API)
 - **Environment Management**: `.env` file for secure API key storage
 - **Logging**: Python's `logging` module for debugging and monitoring
@@ -36,3 +36,5 @@ Welcome to **PeraPeraAI**! This is a cute and interactive chatbot designed to he
    ```bash
    git clone https://github.com/Sofines/PeraPera-ChatBot.git
    cd PeraPera-ChatBot
+   ```
+
