@@ -23,7 +23,8 @@ Welcome to **PeraPeraAI**! This is a cute and interactive chatbot designed to he
 
 ---
 
-## 🚀 Getting Started
+## Preview
+assets/PeraPera-preview.png
 
 ### Prerequisites
 
